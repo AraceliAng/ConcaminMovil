@@ -7,8 +7,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "native-base": "^2.7.2",
     "react": "16.4.1",
-    "react-native": "0.56.0"
+    "react-native": "0.56.0",
+    "react-native-router-flux": "^4.0.1",
+    "react-native-smart-carousel": "^1.1.0",
+    "react-native-vector-icons": "^5.0.0",
+    "save": "^2.3.2"
   },
   "devDependencies": {
     "babel-jest": "23.4.2",
