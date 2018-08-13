@@ -7,7 +7,7 @@ export default class NewsFeed extends Component {
                 <Content>
                     {[0,1,2,3].map((data, i)=>
                     <Card key={i}>
-                        <CardItem>
+                        <CardItem >
                             <Left>
                                 <Thumbnail source={{uri: 'https://www.mobafire.com/images/avatars/kayn-classic.png'}} />
                                 <Body>
