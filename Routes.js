@@ -13,9 +13,11 @@ const Routes = () => {
             <Router>
 
                 <Scene key="root">
+                    <Scene key="login" header={null} component={LoginComponent} inital />
+
+                    <Scene key="main" header={null} component={Main} />
                     <Scene key="detail" header={null} component={DetailPost}/>
-                    <Scene key="main" header={null} component={Main}  />
-                    <Scene key="login" header={null} component={LoginComponent}  />
+
 
                     <Scene key="recover" header={null} component={Recovery}/>
 

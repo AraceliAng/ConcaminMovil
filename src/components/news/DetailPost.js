@@ -16,7 +16,7 @@ export default class DetailPost extends Component {
                     androidStatusBarColor="black"
                 >
                     <Left >
-                        <Button transparent>
+                        <Button transparent onPress={()=>Actions.pop()}>
                             <Icon name='arrow-back' style={{color:'white'}} />
                         </Button>
                     </Left>
