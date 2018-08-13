@@ -3,6 +3,7 @@ import { Container, Header, Content, Tab, Tabs ,Text,Item,Input,Button,Icon,List
 import {StatusBar,StyleSheet,View} from 'react-native'
 import NewsFeed from "../news/NewsFeed";
 import NewPost from "../news/NewPost";
+import GroupsMain from "../groups/GroupsMain";
 class MainPage extends Component {
     state={
         newPost:false
@@ -74,7 +75,7 @@ class MainPage extends Component {
                         activeTextStyle={{color:'white'}}
 
                     >
-                        <Text>Hola 3</Text>
+                       <GroupsMain/>
 
                     </Tab>
                     <Tab
