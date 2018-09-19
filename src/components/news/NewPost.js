@@ -1,13 +1,58 @@
 import React, {Component} from 'react';
-import {Modal, TouchableHighlight, View,StatusBar,Text,StyleSheet,Platform,ScrollView,ImageBackground} from 'react-native';
-import {Header,Button,Icon,List,ListItem,Content,Left,Right,Body,Thumbnail,Card,Textarea} from 'native-base'
+import {Modal, TouchableHighlight, View,StatusBar,Text,StyleSheet,Platform,ScrollView,ImageBackground,TouchableOpacity} from 'react-native';
+import {Header,Button,Icon,List,ListItem,Content,Left,Right,Body,Thumbnail,Card,Textarea,Image} from 'native-base'
+import ImagePicker from 'react-native-image-picker';
+
+
+
+const options={
+    title:'Nuevo Post',
+    takePhotoButtonTitle:'Tomar una foto',
+    chooseFromLibraryButtonTitle:'Elige una foto desde la galeria',
+}
+
 
 
 
 export default class NewPost extends Component {
+    state={
+        avatarSource:null
+    }
+    myfun=()=>{
+       // alert('click')
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled photo picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                let source = { uri: response.uri };
+
+                // You can also display the image using data:
+                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                this.setState({
+                    avatarSource: source
+                });
+            }
+        });
+    }
+
+    clearImage=()=>{
+        this.setState({avatarSource:null})
+    }
 
 
     render() {
+        let {avatarSource}=this.state
+        console.log("que hay ", avatarSource)
         return (
 
             <Modal
@@ -32,18 +77,22 @@ export default class NewPost extends Component {
                 </Header>
                 <StatusBar backgroundColor="black" barStyle="light-content" />
                 <Textarea rowSpan={9}  placeholder="¿Qué quieres compartirnos?" />
-                <View style={styles.imgencita}>
-                    <View style={styles.iconcito}>
-                        <View >
-                            <Icon name="ios-close-circle" style={{color:'black'}}/>
+                {avatarSource ?
+                    <View style={styles.imgencita}>
+                        <View style={styles.iconcito}>
+                            <TouchableOpacity  onPress={this.clearImage}>
+                                <Icon name="ios-close-circle" style={{color:'black'}}/>
+                            </TouchableOpacity>
                         </View>
+                        <Thumbnail square large source={avatarSource} />
                     </View>
+                    :
+                    null
+                }
 
-                    <Thumbnail square large source={{uri:'https://vignette.wikia.nocookie.net/crossoverrp/images/1/12/RedEyesDarknessDragon-TF04-JP-VG.jpg/revision/latest?cb=20130210214719'}} />
-                </View>
 
                 <List>
-                    <ListItem itemDivider icon>
+                    <ListItem itemDivider icon onPress={this.myfun}>
                         <Left>
                             <Icon active name="ios-image" />
                         </Left>
@@ -76,3 +125,9 @@ const styles = StyleSheet.create({
         position:'absolute'
     }
 });
+
+/*
+
+
+
+ */
