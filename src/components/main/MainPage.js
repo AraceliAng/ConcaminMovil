@@ -4,6 +4,8 @@ import {StatusBar,StyleSheet,View} from 'react-native'
 import NewsFeed from "../news/NewsFeed";
 import NewPost from "../news/NewPost";
 import GroupsMain from "../groups/GroupsMain";
+import EventContainer from "../events/EventContainer";
+import CreatePost from "./CreatePost";
 class MainPage extends Component {
     state={
         newPost:false
@@ -49,21 +51,6 @@ class MainPage extends Component {
                         activeTextStyle={{color:'white'}}
                         
                     >
-                        <View style={styles.caja}>
-                            <List >
-                                <ListItem avatar onPress={this.openNewPost}>
-                                    <Left>
-                                        <Thumbnail small source={{ uri: 'https://www.mobafire.com/images/avatars/kayn-classic.png' }} />
-                                    </Left>
-                                    <Body>
-                                    <Text note>¿Qué nos quieres compartir?</Text>
-                                    </Body>
-                                    <Right/>
-                                </ListItem>
-                            </List>
-                        </View>
-                        <NewPost open={this.state.newPost} close={this.openNewPost}/>
-
 
                         <NewsFeed/>
                     </Tab>
@@ -85,7 +72,7 @@ class MainPage extends Component {
                         activeTextStyle={{color:'white'}}
 
                     >
-                        <Text>Hola 3</Text>
+                        <EventContainer/>
 
                     </Tab>
                 </Tabs>

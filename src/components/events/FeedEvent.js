@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
-import {Actions} from "react-native-router-flux";
-import {NewsFeedComponet} from './NewsFeedComponet'
-import CreatePost from "../main/CreatePost";
-export default class NewsFeed extends Component {
+import {NewsFeedComponet} from '../news/NewsFeedComponet'
+export default class FeedEvent extends Component {
     state={
         posts:[
             {
@@ -60,17 +58,16 @@ export default class NewsFeed extends Component {
         ]
     }
     render() {
-            let {posts}=this.state;
+        let {posts}=this.state;
         return (
-                <Content>
-                    <CreatePost/>
-                    {posts.map((post, i)=>
+            <Content>
+                {posts.map((post, i)=>
                     <NewsFeedComponet
                         {...post}
                         key={i}
                     />
-                    )}
-                </Content>
+                )}
+            </Content>
         );
     }
 }
