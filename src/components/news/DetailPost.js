@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {StatusBar,Text,StyleSheet,Image,View} from 'react-native';
-import {Container,Header,Button,Icon,CardItem,Card,Content,Left,Right,Body,Thumbnail,List,ListItem} from 'native-base'
+import {StatusBar,Text,StyleSheet,Image,View,KeyboardAvoidingView} from 'react-native';
+import {Container,Header,Button,Icon,CardItem,Card,Content,Left,Right,Body,Thumbnail,List,ListItem,Input,Item,Form} from 'native-base'
 import {Actions} from "react-native-router-flux";
 
 
@@ -83,7 +83,7 @@ export default class DetailPost extends Component {
                             )}
                         <List>
                             <ListItem itemDivider style={{justifyContent:'center'}}>
-                                <Icon active name="thumbs-up" />
+
                                 <Text >Me gusta</Text>
 
                             </ListItem>
@@ -105,7 +105,32 @@ export default class DetailPost extends Component {
                     </Card>
 
                 </Content>
+                <KeyboardAvoidingView  behavior="padding">
+                    <Form style={{flexDirection:'row', justifyContent:'space-around',backgroundColor:'rgb(244,244,244)',alignItems:'center'}}>
+                        <Item regular style={styles.inputs}>
+                            <Input placeholder="Comenta sobre esta publicación" style={{fontSize:12}} />
+                        </Item>
+                        <Button transparent dark>
+                            <Text style={{fontSize:12}} >PUBLICAR</Text>
+                        </Button>
+
+                    </Form>
+                </KeyboardAvoidingView>
             </Container>
         );
     }
 }
+
+
+const styles = StyleSheet.create({
+    container:{
+        padding:20
+    },
+    inputs:{
+        width:'75%',
+        height:35,
+        backgroundColor:'rgba(255, 255, 255, 0.9)',
+        borderRadius:10
+    },
+
+})

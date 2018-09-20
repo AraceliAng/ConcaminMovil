@@ -25,8 +25,7 @@ export default class CarouselLogin extends Component{
             },
             {
                 "id": 3,
-                "title": "Snowman",
-                "subtitle": "The guy you want",
+                "title": "Un espacio que funciona para ti",
                 "imagePath": img3 // imported
             },
 
@@ -38,7 +37,7 @@ export default class CarouselLogin extends Component{
         return(
 
                 <Carousel
-
+                    autoPlay={true}
                     titleColor={'#fff'}
                     height={400}
                     data={data}

@@ -39,7 +39,7 @@ export default class MainEvent extends Component {
                             <Right/>
                         </CardItem>
                         <CardItem>
-                            <Icon active name="ios-navigate" />
+                            <Icon active name="ios-pin" />
                             <Text note>Insurgentes Sur</Text>
                             <Right/>
                         </CardItem>

@@ -34,7 +34,7 @@ export default class GroupsMain extends Component {
                             <CardItem>
                                 <Body>
                                 <Text>
-                                    Aqui estarán tus grupos cuando te inviten a uno
+                                    Aqui estarán tus grupos, cuando te inviten a uno
                                 </Text>
                                 </Body>
                             </CardItem>

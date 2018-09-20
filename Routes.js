@@ -8,6 +8,7 @@ import DetailPost from "./src/components/news/DetailPost";
 import MainEvent from "./src/components/events/MainEvent";
 import GroupsContainer from "./src/components/groups/GroupsContainer";
 import Profile from "./src/components/profile/Profile";
+import  Notification from './src/components/notification/Notification'
 
 
 const Routes = () => {
@@ -17,7 +18,7 @@ const Routes = () => {
 
                 <Scene key="root">
 
-                    <Scene key="login" header={null} component={LoginComponent} inital />
+                    <Scene key="login" header={null} component={LoginComponent}  inital />
 
                     <Scene key="main" header={null} component={Main} />
                     <Scene key="detail" header={null} component={DetailPost}/>
@@ -29,6 +30,9 @@ const Routes = () => {
 
                     <Scene key="groupDetail" header={null} component={GroupsContainer}/>
                     <Scene key="recover" header={null} component={Recovery}/>
+                    <Scene key="noti" header={null} component={Notification} />
+
+
 
                 </Scene>
             </Router>

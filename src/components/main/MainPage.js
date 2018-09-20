@@ -26,7 +26,7 @@ class MainPage extends Component {
                         <Icon name="ios-search" />
                         <Input placeholder="Search" />
                     </Item>
-                    <Button transparent>
+                    <Button transparent onPress={()=>Actions.noti()}>
                         <Icon name="ios-notifications" style={{color:'white'}}/>
                     </Button>
                 </Header>
