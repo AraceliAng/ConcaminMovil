@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Card, CardItem, Text, Left, Right,Button,Thumbnail,Body,List,ListItem } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Text, Left, Right,Button,Thumbnail,Body,List,ListItem,Icon } from 'native-base';
 import {Actions} from "react-native-router-flux";
 export default class GroupsMain extends Component {
     state={
-        groups:false
+        groups:true
     }
     render() {
         let {groups}=this.state
@@ -22,7 +22,7 @@ export default class GroupsMain extends Component {
                                     </Left>
                                     <Body>
                                     <Text>League of leguends</Text>
-                                    <Text note>+4567</Text>
+                                    <Text note>+4567 Miembros</Text>
                                     </Body>
                                     <Right>
 

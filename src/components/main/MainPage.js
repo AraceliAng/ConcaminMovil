@@ -2,21 +2,12 @@ import React, { Component } from 'react';
 import { Container, Header, Content, Tab, Tabs ,Text,Item,Input,Button,Icon,List,ListItem,Left,Body,Right,Thumbnail} from 'native-base';
 import {StatusBar,StyleSheet,View} from 'react-native'
 import NewsFeed from "../news/NewsFeed";
-import NewPost from "../news/NewPost";
 import GroupsMain from "../groups/GroupsMain";
 import EventContainer from "../events/EventContainer";
-import CreatePost from "./CreatePost";
+import {Actions} from 'react-native-router-flux';
 class MainPage extends Component {
-    state={
-        newPost:false
-    }
 
 
-    openNewPost=()=>{
-        let {newPost}=this.state;
-        newPost =! newPost
-        this.setState({newPost})
-    }
     render() {
         return (
             <Container>
@@ -28,7 +19,7 @@ class MainPage extends Component {
                     style={{ backgroundColor: 'black' }}
                     androidStatusBarColor="black"
                 >
-                    <Button  transparent>
+                    <Button  transparent onPress={()=>Actions.profile()}>
                         <Icon name='ios-contact' style={{color:'white'}} />
                     </Button>
                     <Item>
