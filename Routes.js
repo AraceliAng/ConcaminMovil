@@ -6,6 +6,7 @@ import LoginComponent from "./src/components/login/LoginComponent";
 import Main from "./src/components/main/MainPage";
 import DetailPost from "./src/components/news/DetailPost";
 import MainEvent from "./src/components/events/MainEvent";
+import GroupsContainer from "./src/components/groups/GroupsContainer";
 
 
 const Routes = () => {
@@ -23,6 +24,7 @@ const Routes = () => {
 
                     <Scene key="event" header={null} component={MainEvent}  />
 
+                    <Scene key="groupDetail" header={null} component={GroupsContainer}/>
                     <Scene key="recover" header={null} component={Recovery}/>
 
                 </Scene>
