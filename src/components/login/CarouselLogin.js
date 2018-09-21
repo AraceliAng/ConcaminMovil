@@ -39,7 +39,7 @@ export default class CarouselLogin extends Component{
                 <Carousel
                     autoPlay={true}
                     titleColor={'#fff'}
-                    height={400}
+                    height={350}
                     data={data}
                     navigationType={"bars"}
                     navigationColor={'#ffffff'}
