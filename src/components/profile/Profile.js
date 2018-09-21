@@ -1,11 +1,22 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image, StatusBar} from 'react-native';
+import {View, Text, StyleSheet, Image, StatusBar,AsyncStorage} from 'react-native';
 import {Container, Content, Button, H1, Card, Icon, Left, Body, Title, ListItem,Header,Right} from 'native-base';
 
 import {Actions} from 'react-native-router-flux';
 
 
 export default class Profile extends Component {
+
+
+
+
+    logOut=()=>{
+        AsyncStorage.removeItem("user");
+        AsyncStorage.removeItem("token");
+        Actions.login()
+
+    }
+
     render() {
         return (
             <Container style={styles.container}>
@@ -21,7 +32,13 @@ export default class Profile extends Component {
                     <Body>
                         <Title style={{color:'white'}}>Evento</Title>
                     </Body>
-                    <Right/>
+                    <Right>
+                        <Button transparent  onPress={this.logOut}>
+                            <Text style={{color:'white'}}>Cerrar sesión</Text>
+                        </Button>
+
+                    </Right>
+
                 </Header>
                 <Content>
                     <StatusBar backgroundColor="black" barStyle="light-content" />

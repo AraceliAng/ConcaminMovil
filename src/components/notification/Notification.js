@@ -8,19 +8,7 @@ export default class Notification extends Component {
 
         return (
             <Container>
-                <Header
-                    style={{ backgroundColor: 'black' }}
-                    androidStatusBarColor="black"
-                >
-                    <Left >
-                        <Button transparent onPress={()=>Actions.pop()}>
-                            <Icon name='arrow-back' style={{color:'white'}} />
-                        </Button>
-                    </Left>
-                    <Body/>
-                    <Right/>
-                </Header>
-                <StatusBar backgroundColor="black" barStyle="light-content" />
+
                 <Content>
                     <Card>
                         <CardItem header>

@@ -17,8 +17,10 @@ buildscript {
     }
 }
 
+
 allprojects {
     repositories {
+
         mavenLocal()
         jcenter()
         maven {
@@ -30,6 +32,16 @@ allprojects {
             name 'Google'
         }
     }
+    subprojects {
+         afterEvaluate {
+             project -> if (project.hasProperty("android")) {
+                 android {
+                     compileSdkVersion 26
+                    buildToolsVersion '26.0.2'
+                 }
+             }
+         }
+     }
 }
 
 ext {

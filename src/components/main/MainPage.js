@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Tab, Tabs ,Text,Item,Input,Button,Icon,List,ListItem,Left,Body,Right,Thumbnail} from 'native-base';
-import {StatusBar,StyleSheet,View} from 'react-native'
+import { Container, Header, Content, Tab, Tabs ,Text,Item,Input,Button,Icon,TabHeading,ListItem,Left,Body,Right,Thumbnail} from 'native-base';
+import {StatusBar,StyleSheet,View,Platform} from 'react-native'
 import NewsFeed from "../news/NewsFeed";
 import GroupsMain from "../groups/GroupsMain";
 import EventContainer from "../events/EventContainer";
 import {Actions} from 'react-native-router-flux';
+import Notification from "../notification/Notification";
 class MainPage extends Component {
 
 
@@ -25,10 +26,13 @@ class MainPage extends Component {
                     <Item>
                         <Icon name="ios-search" />
                         <Input placeholder="Search" />
+                        {Platform.OS === "android" ?
+                            <Icon name='ios-contact' onPress={()=>Actions.profile()} />
+                            :null
+                        }
+
+
                     </Item>
-                    <Button transparent onPress={()=>Actions.noti()}>
-                        <Icon name="ios-notifications" style={{color:'white'}}/>
-                    </Button>
                 </Header>
 
 
@@ -36,18 +40,18 @@ class MainPage extends Component {
                       tabBarUnderlineStyle={ { backgroundColor: '#ffffff' }}
                 >
                     <Tab
-                        heading="Noticias"
+                        heading={ <TabHeading style={{backgroundColor:'black'}}><Icon name="md-paper" /></TabHeading>}
                         tabStyle={{backgroundColor:'black'}}
                         activeTabStyle={{backgroundColor:'black'}}
                         activeTextStyle={{color:'white'}}
-                        
+
                     >
 
                         <NewsFeed/>
                     </Tab>
 
                     <Tab
-                        heading="Grupos"
+                        heading={ <TabHeading style={{backgroundColor:'black'}}><Icon name="ios-contacts" /></TabHeading>}
                         tabStyle={{backgroundColor:'black'}}
                         activeTabStyle={{backgroundColor:'black'}}
                         activeTextStyle={{color:'white'}}
@@ -57,7 +61,7 @@ class MainPage extends Component {
 
                     </Tab>
                     <Tab
-                        heading="Eventos"
+                        heading={ <TabHeading style={{backgroundColor:'black'}}><Icon name="ios-calendar" /></TabHeading>}
                         tabStyle={{backgroundColor:'black'}}
                         activeTabStyle={{backgroundColor:'black'}}
                         activeTextStyle={{color:'white'}}
@@ -66,6 +70,17 @@ class MainPage extends Component {
                         <EventContainer/>
 
                     </Tab>
+                    <Tab
+                        heading={ <TabHeading style={{backgroundColor:'black'}}><Icon name="ios-notifications" /></TabHeading>}
+                        tabStyle={{backgroundColor:'black'}}
+                        activeTabStyle={{backgroundColor:'black'}}
+                        activeTextStyle={{color:'white'}}
+
+                    >
+                        <Notification/>
+
+                    </Tab>
+
                 </Tabs>
 
 

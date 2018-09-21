@@ -41,18 +41,15 @@ export  const NewsFeedComponet = ({id,user,date,body,image,love,comments,links})
 
 
 
-        <CardItem >
+        <CardItem button onPress={()=>Actions.detail()}>
             <Left>
-                <Button transparent onPress={()=>Actions.detail()}>
+
                     <Icon active name="thumbs-up" />
                     <Text>{love < 1 ? "": love } Likes</Text>
-                </Button>
             </Left>
-            <Body>
-            <Button transparent onPress={()=>Actions.detail()}>
-                <Icon active name="chatbubbles" />
+            <Body style={{flexDirection:'row'}}>
+                <Icon active name="chatbubbles" style={{marginRight:5}} />
                 <Text>{comments < 1 ? "":comments} Comments</Text>
-            </Button>
             </Body>
             <Right/>
         </CardItem>

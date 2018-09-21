@@ -105,7 +105,7 @@ export default class DetailPost extends Component {
                     </Card>
 
                 </Content>
-                <KeyboardAvoidingView  behavior="padding">
+                <KeyboardAvoidingView  behavior="height">
                     <Form style={{flexDirection:'row', justifyContent:'space-around',backgroundColor:'rgb(244,244,244)',alignItems:'center'}}>
                         <Item regular style={styles.inputs}>
                             <Input placeholder="Comenta sobre esta publicación" style={{fontSize:12}} />

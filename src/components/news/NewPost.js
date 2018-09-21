@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Modal, TouchableHighlight, View,StatusBar,Text,StyleSheet,Platform,ScrollView,ImageBackground,TouchableOpacity,KeyboardAvoidingView} from 'react-native';
-import {Header,Button,Icon,List,ListItem,Content,Left,Right,Body,Thumbnail,Item,Textarea,Form,Input,CardItem,Image} from 'native-base'
+import {Header,Button,Icon,List,ListItem,Container,Content,Left,Right,Body,Thumbnail,Item,Textarea,Form,Input,CardItem,Footer,Card} from 'native-base'
 import ImagePicker from 'react-native-image-picker';
+import {FormNewPost} from "./FormNewPost";
 
 
 
@@ -27,7 +28,9 @@ export default class NewPost extends Component {
         },
     }
     myfun=()=>{
-        this.setState({photo:true,link:false})
+        let {newPost}=this.state
+        newPost.links=[]
+        this.setState({photo:true,activeLink:false,newPost})
         // alert('click')
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
@@ -73,7 +76,10 @@ export default class NewPost extends Component {
         this.setState({newPost})
     }
     addLink=()=> {
-        this.setState({activeLink: true})
+        let {newPost}=this.state
+        newPost.image = ''
+        this.setState({activeLink: true,newPost})
+        this.clearImage()
     }
 
     onSubmit=()=>{
@@ -114,9 +120,8 @@ export default class NewPost extends Component {
                 animationType="slide"
                 visible={this.props.open}
                 onRequestClose={() => {
-                    alert('Modal has been closed.');
+                    this.props.close()
                 }}
-                style={{flex:1}}
             >
                 <Header
                     style={{ backgroundColor: 'black' }}
@@ -136,18 +141,15 @@ export default class NewPost extends Component {
                     </Right>
                 </Header>
                 <StatusBar backgroundColor="black" barStyle="light-content" />
-                <KeyboardAvoidingView
-                    behavior="padding"
-                    style={{flex:1    }}
-                >
+                <Container>
 
-                    <Form style={{flex:2}}>
-                        <Textarea rowSpan={8}  placeholder="¿Qué quieres compartirnos?" onChangeText={value=>this.onChange("body",value)} />
+                    <Content>
+                        <FormNewPost onChange={this.onChange} activeLink={activeLink} newLink={this.newLink}/>
                         {activeLink ?
                             <ListItem icon noBorder>
                                 <Left>
 
-                                        <Icon  name="ios-link" />
+                                    <Icon  name="ios-link" />
 
                                 </Left>
                                 <Body>
@@ -163,6 +165,8 @@ export default class NewPost extends Component {
                             null
 
                         }
+
+
                         {avatarSource ?
                             <View style={styles.imgencita}>
                                 <View style={styles.iconcito}>
@@ -176,17 +180,21 @@ export default class NewPost extends Component {
                             null
                         }
                         {newPost.links ? newPost.links.map((link, i)=>
+
                             <CardItem key={i}>
                                 <Icon active name="ios-link" style={{fontSize:16}} />
                                 <Text note style={styles.textito}>{link}</Text>
                                 <Right/>
                             </CardItem>
+
                         ) : null
 
                         }
 
-                    </Form>
-                    <List>
+
+
+                    </Content>
+                    <List >
                         <ListItem itemDivider icon onPress={this.myfun}>
                             <Left>
                                 <Icon active name="ios-image" />
@@ -207,9 +215,8 @@ export default class NewPost extends Component {
                             <Right/>
                         </ListItem>
                     </List>
+                </Container>
 
-
-                </KeyboardAvoidingView>
 
             </Modal>
         );
@@ -226,7 +233,7 @@ const styles = StyleSheet.create({
         marginRight:10,
         alignItems:'flex-end',
         justifyContent:'flex-end',
-        position:'relative'
+
     },
     iconcito:{
         zIndex:90,
