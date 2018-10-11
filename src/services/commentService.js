@@ -1,8 +1,8 @@
 import {retrieveToken} from "./userService";
-
+import {AsyncStorage} from 'react-native'
 //const baseUrl = 'http://localhost:3000/comments/';
 //const baseUrl = 'https://concamin.herokuapp.com/comments/';
-const baseUrl = 'https://murmuring-beach-52120.herokuapp.com/auth/'
+const baseUrl = 'https://murmuring-beach-52120.herokuapp.com/comments/'
 
 export function addComment(comment){
 
@@ -27,11 +27,12 @@ export function addComment(comment){
         })
 }
 
-export function getPostComments(postId, skip=0){
+export async function getPostComments(postId, skip=0){
+    const token = await AsyncStorage.getItem('token')
     return fetch(baseUrl + `?post=${postId}&skip=${skip}`, {
         method:'get',
         headers:{
-            'Authorization': retrieveToken()
+            'Authorization': token
         }
     })
         .then(res=>{

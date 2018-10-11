@@ -1,14 +1,28 @@
 import React, {Component} from 'react';
 import {StatusBar,Text,StyleSheet,Image,View,KeyboardAvoidingView} from 'react-native';
-import {Container,Header,Button,Icon,CardItem,Card,Content,Left,Right,Body,Thumbnail,List,ListItem,Input,Item,Form} from 'native-base'
+import {Container,Header,Button,Icon,CardItem,Card,Content,Left,Right,Body,Thumbnail,List,ListItem,Input,Item,Form,Spinner} from 'native-base'
+
 import {Actions} from "react-native-router-flux";
 
 
 
 export default class DetailPost extends Component {
+state={
+    post:{},
+    comments:[]
+}
+    componentWillMount(){
+        this.setState({post:this.props.p, comments:this.props.c})
+    }
+
+
+
 
 
     render() {
+        const {post,comments} = this.state;
+        console.log(comments)
+
         return (
             <Container>
                 <Header
@@ -28,23 +42,38 @@ export default class DetailPost extends Component {
                     <Card>
                         <CardItem>
                             <Left>
-                                <Thumbnail source={{uri: 'https://www.mobafire.com/images/avatars/kayn-classic.png'}} />
+                                <Thumbnail source={{uri:post.user.profilePic}} />
                                 <Body>
-                                <Text>Dylan Torres</Text>
-                                <Text note>hace 16 días</Text>
+                                <Text>{post.user.username}</Text>
+                                <Text note>{post.created_at}</Text>
                                 </Body>
                             </Left>
                         </CardItem>
                         <CardItem>
                             <Body>
                             <Text>
-                                //Your text here
+                                {post.body}
                             </Text>
                             </Body>
                         </CardItem>
-                        <CardItem cardBody>
-                            <Image source={{uri: 'https://lolstatic-a.akamaihd.net/frontpage/apps/prod/rg-kayn-reveal/es_MX/94dcc05587bfb7cf3b581917f3dd6662df5eb212/assets/downloads/kayn-soulhunter-1280x1024.jpg'}} style={{height: 200, width: null, flex: 1}}/>
-                        </CardItem>
+                        {post.image ?
+                            <CardItem cardBody>
+                                <Image source={{uri:post.image}} style={{height: 200, width: null, flex: 1}}/>
+                            </CardItem>
+                            :
+                            null
+                        }
+
+
+                        {post.links.map((link, key)=>
+                            <CardItem key={key}>
+                                <Icon active name="ios-link" style={{fontSize:16}} />
+                                <Text note style={styles.textito}>{link}</Text>
+                                <Right/>
+                            </CardItem>
+                        )}
+
+
                         <CardItem bordered>
                             <Left>
                                 <Button transparent>
@@ -55,32 +84,40 @@ export default class DetailPost extends Component {
                             <Body>
                             <Button transparent>
                                 <Icon active name="chatbubbles" />
-                                <Text>4 Comments</Text>
+                                <Text>{comments.length>0 ? comments.length : ""} Comments</Text>
                             </Button>
                             </Body>
                             <Right/>
                         </CardItem>
-                        {[0,1,2,3].map((data, i)=>
+                        {comments.length > 0 ? comments.map((data, i)=>
                             <View key={i}>
                                 <CardItem>
                                     <Left>
-                                        <Thumbnail small source={{uri: 'https://www.mobafire.com/images/champion/square/varus.png'}} />
+                                        <Thumbnail small source={{uri: data.user.profilePic}} />
                                         <Body>
-                                        <Text>Oswaldo Martinez</Text>
-                                        <Text note>hace 16 días</Text>
+                                        <Text>{data.user.username}</Text>
+                                        <Text note>{data.created_at}</Text>
                                         </Body>
                                     </Left>
                                 </CardItem>
                                 <CardItem bordered>
                                     <Body>
                                     <Text>
-                                        //Your text here
+                                        {data.body}
                                     </Text>
                                     </Body>
                                 </CardItem>
                             </View>
 
-                            )}
+                            ):
+                            <List>
+                                <ListItem itemDivider style={{justifyContent:'center'}}>
+
+                                    <Text >Se el primero en comentar</Text>
+
+                                </ListItem>
+                            </List>
+                        }
                         <List>
                             <ListItem itemDivider style={{justifyContent:'center'}}>
 
@@ -131,6 +168,10 @@ const styles = StyleSheet.create({
         height:35,
         backgroundColor:'rgba(255, 255, 255, 0.9)',
         borderRadius:10
+    },
+    textito:{
+        fontSize:14,
+        paddingRight:5,
     },
 
 })

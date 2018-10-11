@@ -1,8 +1,9 @@
-import {retrieveToken} from './userService';
+import {_retrieveData} from './userService';
 //const baseUrl = 'https://concamin.herokuapp.com/posts/';
 //const baseUrl = 'http://localhost:3000/posts/';
-const baseUrl = 'https://murmuring-beach-52120.herokuapp.com/auth/'
-
+import { AsyncStorage } from "react-native"
+const baseUrl = 'https://murmuring-beach-52120.herokuapp.com/posts'
+let token;
 export function getOwnPosts(skip=0){
     return fetch(baseUrl + `own/?skip=${skip}`,{
         headers:{
@@ -19,33 +20,41 @@ export function getOwnPosts(skip=0){
         .catch(e=>console.log(e));
 }
 
-export function addPost(post){
-    const form = new FormData();
-    for(let key in post){
-        form.append(key, post[key]);
-    }
-    return fetch(baseUrl, {
-        method:'post',
-        body:form,
-        //credentials:'include',
-        headers:{
-            "Authorization": retrieveToken()
+export async function addPost(post) {
+
+        const token = await AsyncStorage.getItem('token')
+        const form = new FormData();
+        for(let key in post){
+            form.append(key, post[key]);
         }
-    })
-        .then(res=>{
-            if(!res.ok){
-                console.log(res);
-                return Promise.reject(res.json())
+        console.log("fun",token)
+        return fetch(baseUrl, {
+            method:'post',
+            body:form,
+            //credentials:'include',
+            headers:{
+                "Authorization":token
             }
-            return res.json();
         })
-        .then(post=>{
-            return post;
-        })
+            .then(res=>{
+                if(!res.ok){
+                    console.log(res);
+                    return Promise.reject(res.json())
+                }
+                return res.json();
+            })
+            .then(post=>{
+                return post;
+            })
+
+
+
+
 }
 
-export function getPosts(skip=0, tipo="PERSONAL", group, event){
-    const token = retrieveToken()
+
+export async function getPosts(skip=0, tipo="PERSONAL", group, event){
+    const token = await AsyncStorage.getItem('token')
     return fetch(baseUrl + `?skip=${skip}&tipo=${tipo}&group=${group}&event=${event}`, {
         headers:{
             "Authorization": token
@@ -70,7 +79,7 @@ export function getPosts(skip=0, tipo="PERSONAL", group, event){
 export function getSinglePost(id){
     return fetch(baseUrl + id,{
         headers:{
-            "Authorization": retrieveToken()
+            "Authorization": _retrieveData()
         }
     })
         .then(res=>{
@@ -94,7 +103,7 @@ export function updatePost(post){
         method:'patch',
         body:form,
         headers:{
-            "Authorization": retrieveToken()
+            "Authorization": _retrieveData()
         }
     })
         .then(res=>{
@@ -114,7 +123,7 @@ export function deletePost(id){
         method:'delete',
         headers:{
             "Content-Type":"application/json",
-            "Authorization": retrieveToken()
+            "Authorization": _retrieveData()
         },
         //credentials:'include'
 
@@ -136,7 +145,7 @@ export function likePost(obj){
         method:'PATCH',
         headers:{
             "Content-Type":"application/json",
-            "Authorization": retrieveToken()
+            "Authorization": _retrieveData()
         },
         body:JSON.stringify(obj)
     }).then(res=>{

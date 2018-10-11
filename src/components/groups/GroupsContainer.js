@@ -4,6 +4,7 @@ import { Container, Header, Content, Card, CardItem, Title, Text, Button, Icon, 
 import CreatePost from "../main/CreatePost";
 import {NewsFeedComponet} from '../news/NewsFeedComponet'
 import {Actions} from "react-native-router-flux";
+import NewsFeed from "../news/NewsFeed";
 export default class GroupsContainer extends Component {
     state={
         posts:[
@@ -100,14 +101,10 @@ export default class GroupsContainer extends Component {
                         </CardItem>
                     </Card>
 
-                    <CreatePost/>
+                    <NewsFeed
+                        tipo = "GROUP"
+                    />
 
-                    {posts.map((post, i)=>
-                        <NewsFeedComponet
-                            {...post}
-                            key={i}
-                        />
-                    )}
                 </Content>
                 <StatusBar backgroundColor="black" barStyle="light-content" />
             </Container>

@@ -1,3 +1,4 @@
+
 const baseUrl = 'https://murmuring-beach-52120.herokuapp.com/auth/'
 import { AsyncStorage } from "react-native"
 
@@ -8,7 +9,7 @@ export function deleteSkill(skill){
     return fetch(baseUrl + 'skills/' + skill._id, {
         method:'DELETE',
         headers:{
-            'Authorization': retrieveToken(),
+            'Authorization': _retrieveData(),
             "Content-Type": "application/json"
         }
     })
@@ -24,7 +25,7 @@ export function deleteSkill(skill){
 export function getSkills(user){
     return fetch(baseUrl + 'skills/' + user._id, {
         headers:{
-            'Authorization': retrieveToken()
+            'Authorization': _retrieveData()
         }
     })
         .then(res=>{
@@ -42,7 +43,7 @@ export function saveSkill(skill){
         method:'post',
         body: JSON.stringify(skill),
         headers:{
-            'Authorization': retrieveToken(),
+            'Authorization': _retrieveData(),
             "Content-Type": "application/json"
         }
     })
@@ -61,7 +62,7 @@ export function saveSkill(skill){
 export function getPublicUser(id){
     return fetch(baseUrl + 'users/' + id, {
         headers:{
-            'Authorization': retrieveToken()
+            'Authorization': _retrieveData()
         }
     })
         .then(res=>{
@@ -82,7 +83,7 @@ export function updateUser(user){
         method:'post',
         body:form,
         headers:{
-            "Authorization": retrieveToken(),
+            "Authorization": _retrieveData(),
             //"Content-Type" : "application/json"
         }
 
@@ -102,7 +103,7 @@ export function getLoggedUser(){
     //return fetch(baseUrl + 'logged',{credentials:'include'})
     return fetch(baseUrl + 'logged',{
         headers:{
-            'Authorization': retrieveToken()
+            'Authorization': _retrieveData()
         }
     })
         .then(res=>{
@@ -136,12 +137,13 @@ export function login(auth){
         });
 }
 
+
 export function signup(user){
     return fetch(baseUrl + 'signup',{
         method:'post',
         headers:{
             "Content-Type":"application/json",
-            "Authorization":retrieveToken()
+            "Authorization":JSON.stringify(retrieveToken())
         },
         body:JSON.stringify(user),
         //credentials:'include'
@@ -159,12 +161,21 @@ export function signup(user){
 }
 
 export const saveUser = (data)=>{
-    AsyncStorage.setItem('token', data.access_token);
-    AsyncStorage.setItem('user', JSON.stringify(data.user));
+    AsyncStorage.setItem('token', data.access_token)
+    AsyncStorage.setItem('user', JSON.stringify(data.user))
 }
 
 export const retrieveToken = ()=>{
     return AsyncStorage.getItem('token');
+}
+
+export const _retrieveData = async () => {
+    try {
+          const token = await AsyncStorage.getItem('token')
+        return token
+    } catch (error) {
+        // Error retrieving data
+    }
 }
 
 

@@ -1,126 +1,20 @@
 import React, {Component} from 'react';
 import {Modal, TouchableHighlight, View,StatusBar,Text,StyleSheet,Platform,ScrollView,ImageBackground,TouchableOpacity,KeyboardAvoidingView} from 'react-native';
-import {Header,Button,Icon,List,ListItem,Container,Content,Left,Right,Body,Thumbnail,Item,Textarea,Form,Input,CardItem,Footer,Card} from 'native-base'
+import {Header,Button,Icon,List,ListItem,Container,Content,Left,Right,Body,Thumbnail,Item,Textarea,Form,Input,CardItem,Footer,Card,Toast} from 'native-base'
 import ImagePicker from 'react-native-image-picker';
 import {FormNewPost} from "./FormNewPost";
-
-
-
-const options={
-    title:'Nuevo Post',
-    takePhotoButtonTitle:'Tomar una foto',
-    chooseFromLibraryButtonTitle:'Elige una foto desde la galeria',
-}
+import {addPost} from '../../services/postService'
 
 
 
 
-export default class NewPost extends Component {
-    state={
-        photo:false,
-        activeLink:false,
-        avatarSource:null,
-        newPost:{
-            links:[],
-            body:"",
-            image:"",
-            file:""
-        },
-    }
-    myfun=()=>{
-        let {newPost}=this.state
-        newPost.links=[]
-        this.setState({photo:true,activeLink:false,newPost})
-        // alert('click')
-        ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled photo picker');
-            }
-            else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            }
-            else {
-                let source = { uri: response.uri };
-                let {newPost} = this.state
-
-                newPost["image"]=source
-                // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-                this.setState({
-                    avatarSource: source,
-                    newPost
-                });
-            }
-        });
-    }
-
-    clearImage=()=>{
-        this.setState({avatarSource:null})
-    }
-    //add Link
-    onChange=(field,value)=>{
-        let {newPost}=this.state
-        newPost[field] = value;
-        this.setState({newPost})
-    }
-    newLink=(field,value)=>{
-        let {newPost} = this.state;
-        newPost['links'].push(newPost.link)
-        newPost.link =""
-        this.setState({newPost})
-    }
-    addLink=()=> {
-        let {newPost}=this.state
-        newPost.image = ''
-        this.setState({activeLink: true,newPost})
-        this.clearImage()
-    }
-
-    onSubmit=()=>{
-
-        //this.setState({loading:true})
-        const {newPost} = this.state;
-        /*if(this.props.tipo === "GROUP" ){
-            newPost.tipo = "GROUP";
-            newPost.group = this.props.groupId;
-        }
-        addPost(newPost)
-            .then(post=>{
-                let {posts} = this.state;
-                posts.unshift(post)
-                newPost.body=""
-                newPost.links=[]
-                this.clearFile()
-                this.setState({posts, newPost, loading:false, addLink:false})
-                toastr.success('Se ha publicado tu post')
-            }).catch(e=>{
-            toastr.error('No se pudo publicar, posiblemente tu archivo es muy pesado' + e)
-            console.log(e)
-        })*/
-
-        console.log(newPost)
-        this.props.close()
-
-    }
-
-
-    render() {
-        let {avatarSource,activeLink,newPost}=this.state;
-
-        console.log("que hay ", avatarSource)
-        return (
+    export const NewPost = ({open,close,newLink,onChange,activeLink,onSubmit,imagePost,clearImage,addLink,onImage,links})=> (
 
             <Modal
                 animationType="slide"
-                visible={this.props.open}
+                visible={open}
                 onRequestClose={() => {
-                    this.props.close()
+                    close
                 }}
             >
                 <Header
@@ -128,13 +22,13 @@ export default class NewPost extends Component {
                     androidStatusBarColor="black"
                 >
                     <Left >
-                        <Button transparent onPress={this.props.close} >
+                        <Button transparent onPress={close} >
                             <Icon name='close' style={{color:'white'}} />
                         </Button>
                     </Left>
                     <Body/>
                     <Right>
-                        <TouchableOpacity onPress={this.onSubmit}>
+                        <TouchableOpacity onPress={onSubmit}>
                             <Text style={{color:'white'}}>Enviar</Text>
                         </TouchableOpacity>
 
@@ -144,7 +38,7 @@ export default class NewPost extends Component {
                 <Container>
 
                     <Content>
-                        <FormNewPost onChange={this.onChange} activeLink={activeLink} newLink={this.newLink}/>
+                        <FormNewPost onChange={onChange} activeLink={activeLink} />
                         {activeLink ?
                             <ListItem icon noBorder>
                                 <Left>
@@ -153,10 +47,10 @@ export default class NewPost extends Component {
 
                                 </Left>
                                 <Body>
-                                <Input placeholder="Escribe tu link" onChangeText={value=>this.onChange("link",value)}/>
+                                <Input placeholder="Escribe tu link" onChangeText={value=>onChange("link",value)}/>
                                 </Body>
                                 <Right>
-                                    <Button transparent onPress={this.newLink}>
+                                    <Button transparent onPress={newLink}>
                                         <Icon  name="ios-add-circle"/>
                                     </Button>
                                 </Right>
@@ -167,19 +61,19 @@ export default class NewPost extends Component {
                         }
 
 
-                        {avatarSource ?
+                        {imagePost ?
                             <View style={styles.imgencita}>
                                 <View style={styles.iconcito}>
-                                    <TouchableOpacity  onPress={this.clearImage}>
+                                    <TouchableOpacity  onPress={clearImage}>
                                         <Icon name="ios-close-circle" style={{color:'black'}}/>
                                     </TouchableOpacity>
                                 </View>
-                                <Thumbnail large source={avatarSource}  style={{height: 300, width: 300}}/>
+                                <Thumbnail large source={imagePost}  style={{height: 300, width: 300}}/>
                             </View>
                             :
                             null
                         }
-                        {newPost.links ? newPost.links.map((link, i)=>
+                        {links ? links.map((link, i)=>
 
                             <CardItem key={i}>
                                 <Icon active name="ios-link" style={{fontSize:16}} />
@@ -195,7 +89,7 @@ export default class NewPost extends Component {
 
                     </Content>
                     <List >
-                        <ListItem itemDivider icon onPress={this.myfun}>
+                        <ListItem itemDivider icon onPress={onImage}>
                             <Left>
                                 <Icon active name="ios-image" />
                             </Left>
@@ -205,7 +99,7 @@ export default class NewPost extends Component {
                             <Right/>
 
                         </ListItem>
-                        <ListItem itemDivider icon onPress={this.addLink}>
+                        <ListItem itemDivider icon onPress={addLink}>
                             <Left>
                                 <Icon active name="ios-link" />
                             </Left>
@@ -219,9 +113,7 @@ export default class NewPost extends Component {
 
 
             </Modal>
-        );
-    }
-}
+        )
 
 
 const styles = StyleSheet.create({
@@ -242,3 +134,5 @@ const styles = StyleSheet.create({
         position:'absolute'
     }
 });
+
+

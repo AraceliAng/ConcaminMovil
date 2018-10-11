@@ -4,7 +4,7 @@ import {Header,Button,Icon,List,ListItem,Content,Left,Right,Body,Thumbnail,Item,
 
 
 
-export const FormNewPost =({activeLink,onChange,newLink})=>(
+export const FormNewPost =({activeLink,onChange})=>(
 
 
                 <KeyboardAvoidingView

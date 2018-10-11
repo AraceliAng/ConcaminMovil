@@ -3,7 +3,7 @@ import { Container, Header, Content, Card, CardItem, Text, Left, Right,Button,Th
 import {Actions} from "react-native-router-flux";
 export default class GroupsMain extends Component {
     state={
-        groups:true
+        groups:false
     }
     render() {
         let {groups}=this.state
@@ -21,7 +21,7 @@ export default class GroupsMain extends Component {
                                         <Thumbnail small source={{ uri: 'https://media.comicbook.com/2018/03/yugioh-1093977-1280x0.jpeg' }} />
                                     </Left>
                                     <Body>
-                                    <Text>League of leguends</Text>
+                                    <Text>Comunicación y Difución</Text>
                                     <Text note>+4567 Miembros</Text>
                                     </Body>
                                     <Right>

@@ -25,7 +25,7 @@ class MainPage extends Component {
                     </Button>
                     <Item>
                         <Icon name="ios-search" />
-                        <Input placeholder="Search" />
+                        <Input placeholder="Buscar" />
                         {Platform.OS === "android" ?
                             <Icon name='ios-contact' onPress={()=>Actions.profile()} />
                             :null
@@ -47,7 +47,9 @@ class MainPage extends Component {
 
                     >
 
-                        <NewsFeed/>
+                        <NewsFeed
+                            tipo={"PERSONAL"}
+                        />
                     </Tab>
 
                     <Tab
